@@ -1,0 +1,42 @@
+<section class="container mt-4">
+  <h2>Menu Management (Admin)</h2>
+
+  <form [formGroup]="itemForm" (ngSubmit)="submitItem()" class="mb-4">
+    <div class="form-row row">
+      <div class="col-md-4 mb-2">
+        <input type="text" class="form-control" formControlName="name" placeholder="Item Name">
+      </div>
+      <div class="col-md-4 mb-2">
+        <input type="number" class="form-control" formControlName="price" placeholder="Price">
+      </div>
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="itemForm.invalid">
+          {{ editingIndex === null ? 'Add Item' : 'Update Item' }}
+        </button>
+        <button *ngIf="editingIndex !== null" type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered shadow">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Item Name</th>
+        <th>Price (₹)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="editItem(i)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteItem(item.name)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

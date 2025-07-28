@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="container text-center">
+    <h2 class="mb-4">Menu Items for the Day</h2>
+
+    <div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped shadow rounded">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Item Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of menuItems">
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.price }}</td>
+              <td>
+                <button class="btn btn-success btn-sm" (click)="onPurchase(item)">
+                  Purchase
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <div class="alert alert-warning mt-4">No menu items found.</div>
+    </ng-template>
+  </div>
+</div>

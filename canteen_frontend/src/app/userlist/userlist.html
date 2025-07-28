@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="container text-center">
+    <div class="input-group mb-4 w-50 mx-auto">
+      <input type="text" class="form-control" placeholder="Search by name..." />
+      <button class="btn btn-primary" (click)="filterUsers()">
+        <i class="fa fa-search"></i> Search
+      </button>
+    </div>
+
+    <h2 class="mb-4">Users of the Canteen</h2>
+
+    <button class="btn btn-success mb-4" type="button" (click)="onAddItem()">
+      <i class="fa fa-plus"></i> Add User
+    </button>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped shadow rounded">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>UserName</th>
+            <th> Action</th>
+
+          </tr>
+          <!-- *ngIf="userItems?.length > 0; else noData" -->
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userItems">
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.name }}</td>
+            <!-- <td>{{ user.role }}</td>
+            <td>{{ user.price }}</td> -->
+            <td>
+              <button class="btn btn-sm btn-danger" (click)="onDeleteUser(user.name)">
+                <i class="fa fa-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noData>
+      <div class="alert alert-warning mt-3">
+        No users found.
+      </div>
+    </ng-template>
+
+  </div>
+</div>

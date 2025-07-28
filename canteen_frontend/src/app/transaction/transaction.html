@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <div class="container text-center">
+    <h2 class="mb-4">Transaction History (Admin)</h2>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped shadow rounded">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Source</th>
+            <th>Item Name</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="transactions.length > 0; else noData">
+          <tr *ngFor="let txn of transactions">
+            <td>{{ txn.id }}</td>
+            <td>{{ txn.amount }}</td>
+            <td>{{ txn.transaction_type }}</td>
+            <td>{{ txn.source }}</td>
+            <td>{{ txn.item_name || '—' }}</td>
+            <td>{{ txn.timestamp | date: 'short' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noData>
+        <div class="alert alert-warning mt-3">
+          No transactions found.
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

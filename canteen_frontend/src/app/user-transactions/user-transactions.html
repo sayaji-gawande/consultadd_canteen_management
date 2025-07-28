@@ -1,0 +1,42 @@
+<section class="container mt-5">
+  <h2>User Transactions</h2>
+
+  <div class="my-3">
+    <h4>Current Balance: ₹{{ balance !== null ? balance : 'Loading...' }}</h4>
+  </div>
+
+  <form [formGroup]="addMoneyForm" (ngSubmit)="onAddMoney()" class="mb-4">
+    <div class="form-group mb-2">
+      <label for="amount">Add Money:</label>
+      <input id="amount" type="number" class="form-control" formControlName="amount" placeholder="Enter amount">
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="addMoneyForm.invalid">Add</button>
+  </form>
+
+  <div>
+    <h4>Transaction History</h4>
+    <table class="table table-bordered mt-2" *ngIf="transactions.length > 0; else noTransactions">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Item Name</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let txn of transactions; index as i">
+          <td>{{ i + 1 }}</td>
+          <td class="text-capitalize">{{ txn.transaction_type }}</td>
+          <td>₹{{ txn.amount }}</td>
+          <td>{{ txn.item_name || '-' }}</td>
+          <td>{{ txn.timestamp | date: 'medium' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noTransactions>
+      <p>No transactions available.</p>
+    </ng-template>
+  </div>
+</section>

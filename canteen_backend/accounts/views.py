@@ -1,15 +1,12 @@
 from django.shortcuts import render
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions,generics, filters
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import login, logout
-from accounts.permissions import IsAdmin
-
+from accounts.permissions import IsAdmin , IsEmployee
 from .models import User
 from .serializers import UserRegisterSerializer, UserLoginSerializer
-
 
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -30,7 +27,7 @@ class LoginView(APIView):
         if serializer.is_valid():
             user = serializer.validated_data
             refresh = RefreshToken.for_user(user)
-            login(request, user)  # session login
+            login(request, user)  
 
             return Response({
                 'refresh': str(refresh),
@@ -45,7 +42,7 @@ class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        logout(request)  # session logout
+        logout(request)  
         return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
 
 class EmployeeListView(generics.ListAPIView):
@@ -83,13 +80,8 @@ class EmployeeBalanceView(APIView):
             'balance': employee.balance
         })
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from accounts.permissions import IsEmployee
-
 class MyBalanceView(APIView):
-    permission_classes = [IsAuthenticated, IsEmployee]
+    permission_classes = [permissions.IsAuthenticated, IsEmployee]
 
     def get(self, request):
         return Response({
